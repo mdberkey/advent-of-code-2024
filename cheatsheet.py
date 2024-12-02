@@ -7,7 +7,7 @@ import itertools
 from collections import *
 import heapq
 import functools
-from copy import deepcopy``
+from copy import deepcopy
 
 # INPUTS
 raw = open("i.txt").read()
