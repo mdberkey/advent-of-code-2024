@@ -10,9 +10,9 @@ import functools
 from copy import deepcopy
 
 # INPUTS
-raw = open("i.txt").read()
-lines = open("i.txt").read().splitlines()
-grid = [list(l.split()) for l in open("i.txt").read().splitlines()]
+raw = open("input").read()
+lines = open("input").read().splitlines()
+grid = [list(l.split()) for l in open("input").read().splitlines()]
 
 # PARSING
 nums_lines = list(map(int, lines))
