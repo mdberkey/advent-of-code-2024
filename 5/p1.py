@@ -1,11 +1,5 @@
-import math
-
-
-lines = open("input").read().splitlines()
+lines = open("i1").read().splitlines()
 res = 0
-
-rules = []
-updates = []
 
 for i in range(len(lines)):
     if lines[i] == "":
