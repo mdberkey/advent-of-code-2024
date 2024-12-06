@@ -14,8 +14,7 @@ def extract_nums(string):
     
     return res
 
-raw = open("input").read()
-
+raw = open("i1").read()
 res = extract_nums(raw)
 
 print(res)

@@ -43,8 +43,8 @@ def extract_nums(string):
     
     return res
 
-raw = open("input").read()
-i = "xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))"
+raw = open("i1").read()
+# i0 = "xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))"
 res = extract_nums(raw)
 
 print(res)

@@ -1,5 +1,4 @@
-lines = open("input").read().splitlines()
-grid= [list(l) for l in open("input").read().splitlines()]
+grid= [list(l) for l in open("i1").read().splitlines()]
 
 XMAS = ["X", "M", "A", "S"]
 res = 0

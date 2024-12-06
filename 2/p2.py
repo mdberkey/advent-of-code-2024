@@ -1,8 +1,7 @@
-import math
 from copy import deepcopy
 
 
-lines = open("input").readlines()
+lines = open("i1").readlines()
 res = 0
 
 def is_line_valid(line):
@@ -30,7 +29,6 @@ def is_line_valid(line):
         valid = False
 
     return valid
-
 
 for line in lines:
     line = line.split()

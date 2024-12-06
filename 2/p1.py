@@ -1,7 +1,4 @@
-import math
-
-
-lines = open("input").readlines()
+lines = open("i1").readlines()
 res = 0
 
 for line in lines:
@@ -31,8 +28,6 @@ for line in lines:
  
     if valid:
         res += 1
-
-
 
 print(res)
             

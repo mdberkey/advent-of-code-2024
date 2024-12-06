@@ -1,5 +1,5 @@
 
-with open("input") as f:
+with open("i1") as f:
     lines = [line.strip() for line in f.readlines()]
     left_nums = []
     right_nums = []
