@@ -30,12 +30,13 @@ def is_in_loop(grid, start):
                     res_dir = "left"
 
                 return np, res_dir
-    
-    i, j = start
+
+    # uses slow and fast runners!!!!
+    i, j = fi, fj = start
     dir = "up"
+    fdir = "up"
         
-    while -1 < i < len(grid) and -1 < j < len(grid[0]):
-        print(i, j)
+    while -1 < i < len(grid) and -1 < j < len(grid[0]) and -1 < fi < len(grid) and -1 < fj < len(grid[0]):
         if dir == "up" and i == 0:
             break
         elif dir == "right" and j == len(grid[0]) - 1:
@@ -44,19 +45,37 @@ def is_in_loop(grid, start):
             break
         elif dir == "left" and j == 0:
             break
+        elif fdir == "up" and fi == 0:
+            break
+        elif fdir == "right" and fj == len(grid[0]) - 1:
+            break
+        elif fdir == "down" and fi == len(grid) - 1:
+            break
+        elif fdir == "left" and fj == 0:
+            break
  
         next_pos, dir = get_next(grid, (i, j), dir)
         i, j = i + next_pos[0], j + next_pos[1]
 
-        if (i, j) == start:
-            _, new_dir = get_next(grid, (i, j), dir)
-            if new_dir == "up":
-                print("found loop")
-                return 1
+        fnext_pos, fdir = get_next(grid, (fi, fj), fdir)
+        fi, fj = fi + fnext_pos[0], fj + fnext_pos[1]
+        if fdir == "up" and fi == 0:
+            break
+        elif fdir == "right" and fj == len(grid[0]) - 1:
+            break
+        elif fdir == "down" and fi == len(grid) - 1:
+            break
+        elif fdir == "left" and fj == 0:
+            break
+        fnext_pos, fdir = get_next(grid, (fi, fj), fdir)
+        fi, fj = fi + fnext_pos[0], fj + fnext_pos[1]
+
+        if (i, j) == (fi, fj) and dir == fdir:
+            return 1
  
     return 0
 
-grid = [list(l) for l in open("i0").read().splitlines()]
+grid = [list(l) for l in open("i1").read().splitlines()]
 res = 0
 
 start = get_start(grid)
@@ -65,9 +84,7 @@ for i in range(len(grid)):
     for j in range(len(grid[0])):
         if (i,j) != start and grid[i][j] == ".":
             grid[i][j] = "#"
-            if (i, j) == (7, 6):
-                print("foo")
-                res += is_in_loop(grid, start)
+            res += is_in_loop(grid, start)
             grid[i][j] = "."
 
 print(res)
