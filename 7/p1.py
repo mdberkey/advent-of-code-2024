@@ -1,41 +1,47 @@
 import itertools
-import copy
+from multiprocessing import Pool
 
 
-def get_calib(test_val, nums):
-    for i in range(len(nums) - 1):
-        curr_ops = ["+" for _ in range(len(nums) - 1)]
-        curr_ops[:i] = ["*" for _ in range(i)]
-        for j in range(i-1, len(curr_ops)):
-            new_ops = copy.deepcopy(curr_ops)
-            if j >= i:
-                new_ops[j] = "*"
-            
-            res = nums[0] 
-            for k, op in enumerate(new_ops):
+def get_calib(args):
+    test_val, nums = args
+    n = len(nums)
+
+    for num_mults in range(n):
+        num_pluses = n - 1 - num_mults
+        ops = ["*"] * num_mults + ["+"] * num_pluses
+        op_perms = set(itertools.permutations(ops))
+
+        for perm in op_perms:
+            res = nums[0]
+            for k, op in enumerate(perm):
                 if op == "+":
-                    res += nums[k+1]
+                    res += nums[k + 1]
                 else:
-                    res *= nums[k+1]
+                    res *= nums[k + 1]
+
+                if res > test_val:
+                    break
+
             if res == test_val:
                 return True
     return False
-            
-            
 
-    return res
+def process_line(line):
+    test_val = int(line.split(":")[0])
+    nums = tuple(map(int, line.split(":")[1].strip().split()))
+    valid = get_calib((test_val, nums))
+    return test_val if valid else 0
 
-lines = open("i1").read().splitlines()
-res = 0
+def main():
+    # still takes forever even with a thread pool
+    lines = open("7/i0").read().splitlines()
 
-for l in lines:
-    test_val = int(l.split(":")[0])
-    nums = l.split(":")[1]
-    nums = tuple(int(n) for n in nums.strip().split(" "))
-    
-    valid = get_calib(test_val, nums)
-    if valid:
-        res += test_val
+    with Pool() as pool:
+        results = pool.map(process_line, lines)
 
-print(res) 
+    total_res = sum(results)
+    print(total_res)
 
+
+if __name__ == "__main__":
+    main()
