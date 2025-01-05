@@ -1,5 +1,17 @@
 from itertools import combinations
 
+def get_points(grid, start, delta_i, delta_j):
+    points = set()
+    points.add(start)
+    curr_i, curr_j = start
+
+    while 0 <= curr_i + delta_i < len(grid[0]) and 0 <= curr_j + delta_j < len(grid[1]):
+        curr_i += delta_i
+        curr_j += delta_j
+        points.add((curr_i, curr_j))
+
+    return points
+
 if __name__ == "__main__":
     grid = [list(l) for l in open("8/i1.txt").read().splitlines()]
     antennas = {}
@@ -24,13 +36,10 @@ if __name__ == "__main__":
 
             if p1i >= p2i: # pos slope
                 delta_i *= -1
-                node1, node2 = (p1i + delta_i, p1j - delta_j), (p2i - delta_i, p2j + delta_j)
+                slope_points = get_points(grid, (p2i, p2j), delta_i, -delta_j).union(get_points(grid, (p2i, p2j), -delta_i, delta_j))
             elif p1i < p2i: # neg slope
-                node1, node2 = (p1i - delta_i, p1j - delta_j), (p2i + delta_i, p2j + delta_j)
+                slope_points = get_points(grid, (p2i, p2j), -delta_i, -delta_j).union(get_points(grid, (p2i, p2j), delta_i, delta_j))
 
-            if 0 <= node1[0] < len(grid) and 0 <= node1[1] < len(grid[0]): 
-                seen.add(node1)
-            if 0 <= node2[0] < len(grid) and 0 <= node2[1] < len(grid[0]):
-                seen.add(node2)
-            
+            seen = seen.union(slope_points)            
+
     print(len(seen))
